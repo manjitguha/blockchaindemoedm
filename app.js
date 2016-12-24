@@ -573,18 +573,19 @@ app.get('/api/getusers', function(request, response) {
             } else {
                 body.rows.forEach(function(user) {
                 	userList.push(user);
-                	response.write(JSON.stringify(userList));
+                	
                     console.log('ending response...');
-                    response.end();
                 });
+                response.write(JSON.stringify(userList));
+                response.end();
             }
-
         } else {
             console.log(err);
         }
     });
 
 });
+
 
 http.createServer(app).listen(app.get('port'), '0.0.0.0', function() {
     console.log('Express server listening on port ' + app.get('port'));
