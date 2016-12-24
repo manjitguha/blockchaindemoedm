@@ -4,7 +4,8 @@
 	"private": true,
 	"angular-cli": {},
 	"scripts": {
-		"start": "node app.js"
+		"lint": "tslint \"src/**/*.ts\"",
+    	"start": "node app.js"
 	},
 	"dependencies": {
 		"express": "4.13.x",
