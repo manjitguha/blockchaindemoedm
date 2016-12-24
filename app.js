@@ -3,8 +3,6 @@
  */
 
 var express = require('express'),
-    routes = require('./routes'),
-    user = require('./routes/user'),
     http = require('http'),
     path = require('path'),
     fs = require('fs');
@@ -30,7 +28,7 @@ var multipartMiddleware = multipart();
 
 // all environments
 app.set('port', process.env.PORT || 3000);
-app.set('views', __dirname + '/views');
+app.set('views', __dirname + '/app');
 app.set('view engine', 'ejs');
 app.engine('html', require('ejs').renderFile);
 app.use(logger('dev'));
@@ -40,7 +38,7 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 app.use(methodOverride());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/style', express.static(path.join(__dirname, '/views/style')));
+//app.use('/style', express.static(path.join(__dirname, '/views/style')));
 
 // development only
 if ('development' == app.get('env')) {
@@ -85,7 +83,7 @@ function initDBConnection() {
 
 initDBConnection();
 
-app.get('/', routes.index);
+//app.get('/', routes.index);
 
 function createResponseData(id, name, value, attachments) {
 
