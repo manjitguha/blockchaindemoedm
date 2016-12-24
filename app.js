@@ -436,7 +436,7 @@ app.get('/api/getusers', function(request, response) {
             	userList.push(user);
                 console.log('ending response...');
             });
-            response.write(userList);
+            response.write(JSON.stringify(userList));
             response.end();
         } else {
             console.log(err);
