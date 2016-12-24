@@ -448,7 +448,125 @@ app.get('/api/getusers', function(request, response) {
                         response.write(JSON.stringify(userList));
                         console.log(JSON.stringify(userList));
                         console.log('ending response...');
-                        response.end();
+                    }
+                });
+                db.insert({
+                    username: 'ajohnson', password: 'password', firstName: 'Angella', lastName: 'Johnson', organization: {
+                        orgName: 'SAINT FRANCIS MEDICAL GROUP INC',
+                        orgDescription: 'GROUP PRACTICE',
+                        homeURL: '/payer'
+                    }
+                }, '', function(err, user) {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        console.log('User : ' + JSON.stringify(user));
+                        userList.push(user);
+                        response.write(JSON.stringify(userList));
+                        console.log(JSON.stringify(userList));
+                        console.log('ending response...');
+                    }
+                });
+                db.insert({
+                    username: 'ksierra', password: 'password', firstName: 'Kathy', lastName: 'Sierra', organization: {
+                        orgName: 'SAINT FRANCIS MEDICAL GROUP INC',
+                        orgDescription: 'GROUP PRACTICE',
+                        homeURL: '/patient'
+                    }
+                }, '', function(err, user) {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        console.log('User : ' + JSON.stringify(user));
+                        userList.push(user);
+                        response.write(JSON.stringify(userList));
+                        console.log(JSON.stringify(userList));
+                        console.log('ending response...');
+                    }
+                });
+                db.insert({
+                    username: 'ghohpe', password: 'password', firstName: 'Gregor', lastName: 'Hohpe', organization: {
+                        orgName: 'SAINT FRANCIS MEDICAL GROUP INC',
+                        orgDescription: 'GROUP PRACTICE',
+                        homeURL: '/pharmacy'
+                    }
+                }, '', function(err, user) {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        console.log('User : ' + JSON.stringify(user));
+                        userList.push(user);
+                        response.write(JSON.stringify(userList));
+                        console.log(JSON.stringify(userList));
+                        console.log('ending response...');
+                    }
+                });
+                db.insert({
+                    username: 'egamma', password: 'password', firstName: 'Erich', lastName: 'Gamma', organization: {
+                        orgName: 'SAINT FRANCIS MEDICAL GROUP INC',
+                        orgDescription: 'GROUP PRACTICE',
+                        homeURL: '/secretory'
+                    }
+                }, '', function(err, user) {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        console.log('User : ' + JSON.stringify(user));
+                        userList.push(user);
+                        response.write(JSON.stringify(userList));
+                        console.log(JSON.stringify(userList));
+                        console.log('ending response...');
+                    }
+                });
+                db.insert({
+                    username: 'rjohnson', password: 'password', firstName: 'Ralph', lastName: 'Johnson', organization: {
+                        orgName: 'SAINT FRANCIS MEDICAL GROUP INC',
+                        orgDescription: 'GROUP PRACTICE',
+                        homeURL: '/lab'
+                    }
+                }, '', function(err, user) {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        console.log('User : ' + JSON.stringify(user));
+                        userList.push(user);
+                        response.write(JSON.stringify(userList));
+                        console.log(JSON.stringify(userList));
+                        console.log('ending response...');
+                    }
+                });
+                db.insert( {
+                    username: 'rhelm', password: 'password', firstName: 'Richard', lastName: 'Helm', organization: {
+                        orgName: 'SAINT FRANCIS MEDICAL GROUP INC',
+                        orgDescription: 'GROUP PRACTICE',
+                        homeURL: '/provider'
+                    }
+                }, '', function(err, user) {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        console.log('User : ' + JSON.stringify(user));
+                        userList.push(user);
+                        response.write(JSON.stringify(userList));
+                        console.log(JSON.stringify(userList));
+                        console.log('ending response...');
+                    }
+                });
+                db.insert({
+                    username: 'jvlissides', password: 'password', firstName: 'John', lastName: 'Vlissides', organization: {
+                        orgName: 'SAINT FRANCIS MEDICAL GROUP INC',
+                        orgDescription: 'GROUP PRACTICE',
+                        homeURL: '/provider'
+                    }
+                }, '', function(err, user) {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        console.log('User : ' + JSON.stringify(user));
+                        userList.push(user);
+                        response.write(JSON.stringify(userList));
+                        console.log(JSON.stringify(userList));
+                        console.log('ending response...');
                     }
                 });
             } else {
