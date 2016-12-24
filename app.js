@@ -572,19 +572,10 @@ app.get('/api/getusers', function(request, response) {
                 });
             } else {
                 body.rows.forEach(function(user) {
-                    db.get(user.id, {
-                        revs_info: true
-                    }, function(err, user) {
-                        if (!err) {
-                        	userList.push(user);
-                            response.write(JSON.stringify(userList));
-                            console.log('ending response...');
-                            response.end();
-                        } else {
-                            console.log(err);
-                        }
-                    });
-
+                	userList.push(user);
+                	response.write(JSON.stringify(userList));
+                    console.log('ending response...');
+                    response.end();
                 });
             }
 
