@@ -423,7 +423,7 @@ app.get('/api/favorites', function(request, response) {
 
 
 app.get('/api/getusers', function(request, response) {
-    console.log("Get method invoked.. ")
+    console.log("/api/getusers method invoked.. ")
 
     db = cloudant.use(dbCredentials.dbName);
     var userList = [];
