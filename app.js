@@ -48,8 +48,8 @@ if ('development' == app.get('env')) {
 }
 
 function initDBConnection() {
-    //When running on Bluemix, this variable will be set to a json object
-    //containing all the service credentials of all the bound services
+    // When running on Bluemix, this variable will be set to a json object
+    // containing all the service credentials of all the bound services
     if (process.env.VCAP_SERVICES) {
         var vcapServices = JSON.parse(process.env.VCAP_SERVICES);
         // Pattern match to find the first instance of a Cloudant service in
@@ -60,14 +60,15 @@ function initDBConnection() {
                 dbCredentials.url = vcapServices[vcapService][0].credentials.url;
             }
         }
-    } else { //When running locally, the VCAP_SERVICES will not be set
+    } else { // When running locally, the VCAP_SERVICES will not be set
 
         // When running this app locally you can get your Cloudant credentials
         // from Bluemix (VCAP_SERVICES in "cf env" output or the Environment
         // Variables section for an app in the Bluemix console dashboard).
         // Alternately you could point to a local database here instead of a
         // Bluemix service.
-        // url will be in this format: https://username:password@xxxxxxxxx-bluemix.cloudant.com
+        // url will be in this format:
+		// https://username:password@xxxxxxxxx-bluemix.cloudant.com
         dbCredentials.url = "REPLACE ME";
     }
 
@@ -330,7 +331,6 @@ app.put('/api/favorites', function(request, response) {
 });
 
 app.get('/api/favorites', function(request, response) {
-
     console.log("Get method invoked.. ")
 
     db = cloudant.use(dbCredentials.dbName);
@@ -421,6 +421,60 @@ app.get('/api/favorites', function(request, response) {
 
 });
 
+
+app.get('/api/getusers', function(request, response) {
+    console.log("Get method invoked.. ")
+
+    db = cloudant.use(dbCredentials.dbName);
+    var userList = [];
+    var i = 0;
+    db.list(function(err, body) {
+        if (!err) {
+            var len = body.rows.length;
+            console.log('total # of users -> ' + len);
+            if (len == 0) {
+                db.insert({
+                    username: 'johnsmith', password: 'password', firstName: 'John', lastName: 'Smith', organization: {
+                        orgName: 'SAINT FRANCIS MEDICAL GROUP INC',
+                        orgDescription: 'GROUP PRACTICE',
+                        homeURL: '/provider'
+                    }
+                }, '', function(err, user) {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        console.log('User : ' + JSON.stringify(user));
+                        userList.push(user);
+                        response.write(JSON.stringify(userList));
+                        console.log(JSON.stringify(userList));
+                        console.log('ending response...');
+                        response.end();
+                    }
+                });
+            } else {
+                body.rows.forEach(function(user) {
+                    db.get(user.id, {
+                        revs_info: true
+                    }, function(err, user) {
+                        if (!err) {
+                        	userList.push(user);
+                            response.write(JSON.stringify(userList));
+                            console.log('ending response...');
+                            response.end();
+                        } else {
+                            console.log(err);
+                        }
+                    });
+
+                });
+            }
+
+        } else {
+            console.log(err);
+        }
+    });
+
+});
 
 http.createServer(app).listen(app.get('port'), '0.0.0.0', function() {
     console.log('Express server listening on port ' + app.get('port'));
