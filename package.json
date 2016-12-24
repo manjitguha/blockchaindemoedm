@@ -2,15 +2,9 @@
 	"name": "blockchaindemoedm",
 	"version": "0.0.2",
 	"private": true,
-	"angular-cli": {
-		
-	},
+	"angular-cli": {},
 	"scripts": {
-		"start": "ng serve",
-		"lint": "tslint \"src/**/*.ts\"",
-		"test": "ng test",
-		"pree2e": "webdriver-manager update",
-		"e2e": "protractor"
+		"start": "node app.js"
 	},
 	"dependencies": {
 		"express": "4.13.x",
