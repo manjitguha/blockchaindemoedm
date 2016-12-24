@@ -567,6 +567,7 @@ app.get('/api/getusers', function(request, response) {
                         response.write(JSON.stringify(userList));
                         console.log(JSON.stringify(userList));
                         console.log('ending response...');
+                        response.end();
                     }
                 });
             } else {
