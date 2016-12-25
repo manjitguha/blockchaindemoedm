@@ -464,8 +464,8 @@ app.get('/api/getusers', function(request, response) {
 app.get('/api/doauth', function(request, response) {
     console.log("/api/doauth method invoked.. ");
 
-    var username = request.params.username;
-    var password = request.params.password;
+    var username = request.param('username');
+    var password = request.param('password');
     console.log('username -->'+username);
     console.log('password -->'+password);
     
