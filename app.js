@@ -423,7 +423,7 @@ app.get('/api/favorites', function(request, response) {
 
 
 app.get('/api/getusers', function(request, response) {
-    console.log("/api/getusers method invoked.. ")
+    console.log("/api/getusers method invoked.. ");
 
     db = cloudant.use(dbCredentials.dbName);
     var userList = [];
@@ -457,10 +457,40 @@ app.get('/api/getusers', function(request, response) {
             console.log(err);
         }
     });
-    
-   
-
 });
+
+
+app.get('/api/doauth', function(request, response) {
+    console.log("/api/doauth method invoked.. ");
+
+    var username = request.body.username;
+    var password = request.body.password;
+    if(username && password){
+	    db = cloudant.use(dbCredentials.dbName);
+	    var userList = [];
+	    var i = 0;
+	    db.get({
+	    	  "selector": {
+	    		    "username": {
+	    		      "$eq": username
+	    		    },
+	    		    "password": {
+	    		      "$eq": password
+	    		    }
+	    		  },
+	    		  "fields": [
+	    		  ]
+	    		}, {
+	        revs_info: true
+	    }, function(err, doc) {
+	    	console.log(doc);
+	    });
+    }
+    else{
+    	console.log("/api/doauth method invocation failed.. username or password is blank");
+    }
+});
+
 
 
 http.createServer(app).listen(app.get('port'), '0.0.0.0', function() {
