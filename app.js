@@ -438,7 +438,17 @@ app.get('/api/getusers', function(request, response) {
                   }, function(err, user) {
                       if (!err) {
                     	  userList.push(user);
+                    	  i++;
                     	  console.log('User is ->'+user);
+                    	  
+                    	  if (i >= len) {
+                    		  response.write(JSON.stringify(userList));
+                		      response.end(); 
+                		      console.log('ending response...');
+                          }
+                      }
+                      else{
+                    	  console.log(err);
                       }
                   });
             	console.log('Adding User');
@@ -448,8 +458,7 @@ app.get('/api/getusers', function(request, response) {
         }
     });
     
-    response.write(JSON.stringify(userList));
-    response.end();
+   
 
 });
 
