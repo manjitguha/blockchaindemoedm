@@ -455,6 +455,7 @@ app.get('/api/getusers', function(request, response) {
             });
         } else {
             console.log(err);
+            response.end(); 
         }
     });
 });
@@ -463,8 +464,8 @@ app.get('/api/getusers', function(request, response) {
 app.get('/api/doauth', function(request, response) {
     console.log("/api/doauth method invoked.. ");
 
-    var username = request.param('username');
-    var password = request.param('password');
+    var username = request.params.username;
+    var password = request.params.password;
     console.log('username -->'+username);
     console.log('password -->'+password);
     
@@ -483,14 +484,14 @@ app.get('/api/doauth', function(request, response) {
 	    		  },
 	    		  "fields": [
 	    		  ]
-	    		}, {
-	        revs_info: true
-	    }, function(err, doc) {
+	    		}, '', function(err, doc) {
 	    	console.log(doc);
 	    });
+	    response.end(); 
     }
     else{
     	console.log("/api/doauth method invocation failed.. username or password is blank");
+    	  response.end(); 
     }
 });
 
