@@ -465,6 +465,11 @@ app.get('/api/doauth', function(request, response) {
 
     var username = request.body.username;
     var password = request.body.password;
+    console.log(request.body);
+    console.log(request.params);
+    console.log(username);
+    console.log(password);
+    
     if(username && password){
 	    db = cloudant.use(dbCredentials.dbName);
 	    var userList = [];
