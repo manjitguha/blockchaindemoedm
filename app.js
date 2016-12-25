@@ -433,11 +433,11 @@ app.get('/api/getusers', function(request, response) {
             var len = body.rows.length;
             console.log('total # of users -> ' + len);
             body.rows.forEach(function(user) {
-            	//userList.push(user);
-                console.log(JSON.stringify(user));
-            	console.log('ending response...');
+            	userList.push(user.value);
+                console.log(user.value);
+            	console.log('Adding User');
             });
-            //response.write(JSON.stringify(userList));
+            response.write(JSON.stringify(userList));
             response.end();
         } else {
             console.log(err);
