@@ -57680,7 +57680,7 @@ var fakeBackendProvider = {
             // wrap in timeout to simulate server api call
             setTimeout(function () {
                 // fake authenticate api end point
-                if (connection.request.url.endsWith('/api/authenticate') && connection.request.method === __WEBPACK_IMPORTED_MODULE_0__angular_http__["RequestMethod"].Post) {
+                if (connection.request.url.endsWith('/api/authenticate-old') && connection.request.method === __WEBPACK_IMPORTED_MODULE_0__angular_http__["RequestMethod"].Post) {
                     // get parameters from post request
                     var params = JSON.parse(connection.request.getBody());
                     var userExists = 1;
@@ -57701,7 +57701,7 @@ var fakeBackendProvider = {
                     }
                 }
                 // fake users api end point
-                if (connection.request.url.endsWith('/api/users') && connection.request.method === __WEBPACK_IMPORTED_MODULE_0__angular_http__["RequestMethod"].Get) {
+                if (connection.request.url.endsWith('/api/users-old') && connection.request.method === __WEBPACK_IMPORTED_MODULE_0__angular_http__["RequestMethod"].Get) {
                     // check for fake auth token in header and return test users if valid, this security is implemented server side
                     // in a real application
                     if (connection.request.headers.get('Authorization') === 'Bearer fake-jwt-token') {
