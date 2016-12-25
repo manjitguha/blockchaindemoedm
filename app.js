@@ -432,9 +432,16 @@ app.get('/api/getusers', function(request, response) {
         if (!err) {
             var len = body.rows.length;
             console.log('total # of users -> ' + len);
-            body.rows.forEach(function(user) {
-            	userList.push(user.value);
-                console.log(user.value.username);
+            body.rows.forEach(function(document) {
+            	  db.get(document.id, {
+                      revs_info: true
+                  }, function(err, user) {
+                      if (!err) {
+                    	  userList.push(user);
+                    	  console.log(user);
+                      }
+                  });
+            	console.log(userList);
             	console.log('Adding User');
             });
             response.write(JSON.stringify(userList));
