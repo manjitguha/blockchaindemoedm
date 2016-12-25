@@ -473,7 +473,7 @@ app.get('/api/doauth', function(request, response) {
 	    db = cloudant.use(dbCredentials.dbName);
 	    var userList = [];
 	    var i = 0;
-	    db.get({
+	    db.find({
 	    	  "selector": {
 	    		    "username": {
 	    		      "$eq": username
@@ -484,9 +484,11 @@ app.get('/api/doauth', function(request, response) {
 	    		  },
 	    		  "fields": [
 	    		  ]
-	    		}, '', function(err, doc) {
-	    	console.log(doc);
-	    });
+	    		}, 
+	    		function(err, doc) {
+	    			console.log(doc);
+	    		}
+	    	);
 	    response.end(); 
     }
     else{
