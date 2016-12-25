@@ -486,14 +486,23 @@ app.get('/api/doauth', function(request, response) {
 	    		  ]
 	    		}, 
 	    		function(err, doc) {
-	    			console.log(doc);
+	    			if(!err){
+	    				doc.forEach(function(user) {
+	    					response.write({ status: 200, body: { token: 'fake-jwt-token' , loggedIdUser:user} });
+		        		    response.end(); 
+	    				});
+	    			}
+	    			else{
+	    				response.write({ status: 200 });
+	        		    response.end();
+	    			}
 	    		}
 	    	);
-	    response.end(); 
-    }
+	}
     else{
     	console.log("/api/doauth method invocation failed.. username or password is blank");
-    	  response.end(); 
+    	response.write({ status: 200 });
+    	response.end(); 
     }
 });
 
