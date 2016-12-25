@@ -443,13 +443,13 @@ app.get('/api/getusers', function(request, response) {
                   });
             	console.log('Adding User');
             });
-            
-            response.write(JSON.stringify(userList));
-            response.end();
         } else {
             console.log(err);
         }
     });
+    
+    response.write(JSON.stringify(userList));
+    response.end();
 
 });
 
