@@ -487,7 +487,7 @@ app.get('/api/doauth', function(request, response) {
 	    		}, 
 	    		function(err, doc) {
 	    			if(!err){
-	    				doc.forEach(function(user) {
+	    				doc.rows.forEach(function(user) {
 	    					response.write({ status: 200, body: { token: 'fake-jwt-token' , loggedIdUser:user} });
 		        		    response.end(); 
 	    				});
