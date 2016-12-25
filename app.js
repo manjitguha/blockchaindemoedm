@@ -433,18 +433,17 @@ app.get('/api/getusers', function(request, response) {
             var len = body.rows.length;
             console.log('total # of users -> ' + len);
             body.rows.forEach(function(document) {
-            	  console.log(document.id);
             	  db.get(document.id, {
                       revs_info: true
                   }, function(err, user) {
                       if (!err) {
                     	  userList.push(user);
-                    	  console.log(user);
+                    	  console.log('User is ->'+user);
                       }
                   });
-            	console.log(userList);
             	console.log('Adding User');
             });
+            
             response.write(JSON.stringify(userList));
             response.end();
         } else {
