@@ -422,11 +422,11 @@ app.get('/api/favorites', function(request, response) {
 });
 
 
-app.get('/api/getusers', function(request, response) {
-    console.log("/api/getusers method invoked.. ");
+app.get('/api/users', function(request, response) {
+    console.log("/api/users method invoked.. ");
 
     db = cloudant.use(dbCredentials.dbName);
-    var userList = [];
+    var userList = []; 
     var i = 0;
     db.list(function(err, body) {
         if (!err) {
@@ -442,27 +442,30 @@ app.get('/api/getusers', function(request, response) {
                     	  console.log('User is ->'+user);
                     	  
                     	  if (i >= len) {
-                    		  response.write(JSON.stringify(userList));
+                    		  response.write(JSON.stringify({ status: 200,body: userList }));
+                    	    	
                 		      response.end(); 
                 		      console.log('ending response...');
                           }
                       }
                       else{
-                    	  console.log(err);
+                    	  	response.write(JSON.stringify({ status: 200 }));
+                      		response.end(); 
                       }
                   });
             	console.log('Adding User');
             });
         } else {
             console.log(err);
-            response.end(); 
+            response.write(JSON.stringify({ status: 200 }));
+        	response.end(); 
         }
     });
 });
 
 
-app.get('/api/doauth', function(request, response) {
-    console.log("/api/doauth method invoked.. ");
+app.get('/api/authenticate', function(request, response) {
+    console.log("/api/authenticate method invoked.. ");
 
     var username = request.param('username');
     var password = request.param('password');
@@ -495,20 +498,20 @@ app.get('/api/doauth', function(request, response) {
 							response.end(); 
 	    				}
 	    				else{
-	    					response.write({ status: 200 });
+	    					response.write(JSON.stringify({ status: 200 }));
 		        		    response.end();
 	    				}
 	    			}
 	    			else{
-	    				response.write({ status: 200 });
+	    				response.write(JSON.stringify({ status: 200 }));
 	        		    response.end();
 	    			}
 	    		}
 	    	);
 	}
     else{
-    	console.log("/api/doauth method invocation failed.. username or password is blank");
-    	response.write({ status: 200 });
+    	console.log("/api/authenticate method invocation failed.. username or password is blank");
+    	response.write(JSON.stringify({ status: 200 }));
     	response.end(); 
     }
 });
