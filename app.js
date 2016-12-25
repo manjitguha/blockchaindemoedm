@@ -488,8 +488,16 @@ app.get('/api/doauth', function(request, response) {
 	    		function(err, doc) {
 	    			if(!err){
 	    				console.log('User --> '+doc);
-						response.write(JSON.stringify({ status: 200, body: { token: 'fake-jwt-token' , loggedIdUser:doc} }));
-						response.end(); 
+	    				console.log('User Docs--> '+doc.docs);
+	    				console.log('No of Users --> '+doc.docs.length);
+	    				if(doc.docs.length>0){
+							response.write(JSON.stringify({ status: 200, body: { token: 'fake-jwt-token' , loggedIdUser:doc.docs[0]} }));
+							response.end(); 
+	    				}
+	    				else{
+	    					response.write({ status: 200 });
+		        		    response.end();
+	    				}
 	    			}
 	    			else{
 	    				response.write({ status: 200 });
