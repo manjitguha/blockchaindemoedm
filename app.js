@@ -463,12 +463,10 @@ app.get('/api/getusers', function(request, response) {
 app.get('/api/doauth', function(request, response) {
     console.log("/api/doauth method invoked.. ");
 
-    var username = request.body.username;
-    var password = request.body.password;
-    console.log(request.body);
-    console.log(request.params);
-    console.log(username);
-    console.log(password);
+    var username = request.param('username');
+    var password = request.param('password');
+    console.log('username -->'+username);
+    console.log('password -->'+password);
     
     if(username && password){
 	    db = cloudant.use(dbCredentials.dbName);
