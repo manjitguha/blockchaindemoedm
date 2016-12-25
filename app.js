@@ -434,7 +434,7 @@ app.get('/api/getusers', function(request, response) {
             console.log('total # of users -> ' + len);
             body.rows.forEach(function(user) {
             	userList.push(user.value);
-                console.log(user.value);
+                console.log(user.value.username);
             	console.log('Adding User');
             });
             response.write(JSON.stringify(userList));
