@@ -422,7 +422,7 @@ app.get('/api/favorites', function(request, response) {
 });
 
 
-app.get('/api/users-new', function(request, response) {
+app.get('/api/users', function(request, response) {
     console.log("/api/users method invoked.. ");
 
     db = cloudant.use(dbCredentials.dbName);
@@ -464,13 +464,21 @@ app.get('/api/users-new', function(request, response) {
 });
 
 
-app.get('/api/authenticate-new', function(request, response) {
+app.post('/api/authenticate', function(request, response) {
     console.log("/api/authenticate method invoked.. ");
 
     var username = request.param('username');
     var password = request.param('password');
     console.log('username -->'+username);
     console.log('password -->'+password);
+    
+    if(!username && !password){
+    	username = request.body.username;
+        password = request.body.password;
+    }
+    console.log('username -->'+username);
+    console.log('password -->'+password);
+    
     
     if(username && password){
 	    db = cloudant.use(dbCredentials.dbName);
