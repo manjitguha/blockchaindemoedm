@@ -193,6 +193,68 @@ app.post('/api/authenticate', function(request, response) {
 });
 
 
+app.post('/api/patient', function(request, response) {
+    console.log("/api/patient method invoked.. ");
+
+    var username = request.param('username');
+    var password = request.param('password');
+    console.log('username -->'+username);
+    console.log('password -->'+password);
+    
+    if(!username && !password){
+    	username = request.body.username;
+        password = request.body.password;
+    }
+    console.log('username -->'+username);
+    console.log('password -->'+password);
+    
+    
+    if(username && password){
+	    db = cloudant.use(dbCredentials.dbName);
+	    var userList = [];
+	    var i = 0;
+	    db.find({
+	    	  "selector": {
+	    		    "username": {
+	    		      "$eq": username
+	    		    },
+	    		    "password": {
+	    		      "$eq": password
+	    		    }
+	    		  },
+	    		  "fields": [
+	    		  ]
+	    		}, 
+	    		function(err, doc) {
+	    			if(!err){
+	    				console.log('User --> '+doc);
+	    				console.log('User Docs--> '+doc.docs);
+	    				console.log('No of Users --> '+doc.docs.length);
+	    				if(doc.docs.length>0){
+							response.write(JSON.stringify({ status: 200, body: { token: 'fake-jwt-token' , loggedIdUser:doc.docs[0]} }));
+							response.end(); 
+	    				}
+	    				else{
+	    					response.write(JSON.stringify({ status: 200 }));
+		        		    response.end();
+	    				}
+	    			}
+	    			else{
+	    				response.write(JSON.stringify({ status: 200 }));
+	        		    response.end();
+	    			}
+	    		}
+	    	);
+	}
+    else{
+    	console.log("/api/patient method invocation failed.. username or password is blank");
+    	response.write(JSON.stringify({ status: 200 }));
+    	response.end(); 
+    }
+});
+
+
+
 
 http.createServer(app).listen(app.get('port'), '0.0.0.0', function() {
     console.log('Express server listening on port ' + app.get('port'));
