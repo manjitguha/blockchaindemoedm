@@ -3,6 +3,8 @@
  */
 
 var express = require('express'),
+    routes = require('./routes'),
+    user = require('./routes/user'),
     http = require('http'),
     path = require('path'),
     fs = require('fs');
@@ -38,7 +40,7 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 app.use(methodOverride());
 app.use(express.static(path.join(__dirname, 'public')));
-//app.use('/style', express.static(path.join(__dirname, '/views/css')));
+app.use('/style', express.static(path.join(__dirname, '/views/css')));
 
 // development only
 if ('development' == app.get('env')) {
