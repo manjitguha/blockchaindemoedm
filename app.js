@@ -202,7 +202,7 @@ app
 				});
 
 app
-		.post(
+		.get(
 				'/api/patient',
 				function(request, response) {
 					console.log("/api/patient method invoked.. ");
