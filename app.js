@@ -331,23 +331,31 @@ app
 					if (firstname || middlename || lastname) {
 						db = cloudant.use(dbCredentials.patientDbName);
 						
-						var searchstring=[];
+						var searchstring='[';
+						var hasPreviousElem = false;
 						if(firstname){
-							searchstring.push({"firstname":firstname});
+							searchstring+='{"firstname":firstname}';
+							hasPreviousElem = true;
 						}
 						if(middlename){
-							searchstring.push({"middlename":middlename});
+							if(hasPreviousElem == true){
+								searchstring+=',';
+							}
+							searchstring+='{"middlename":middlename}';
+							hasPreviousElem = true;
 						}
 						if(lastname){
-							searchstring.push({"lastname":lastname});
+							if(hasPreviousElem == true){
+								searchstring+=',';
+							}
+							searchstring+='{"lastname":lastname}';
 						}
-						
-						console.log(JSON.stringify(searchstring));
+						searchstring+=']';
 						
 						
 						db.find({
 							"selector" : {
-								"$or":JSON.stringify(searchstring)
+								"$or":searchstring
 							},
 							"fields" : []
 						}, function(err, doc) {
