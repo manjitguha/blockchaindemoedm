@@ -342,7 +342,7 @@ app
 							searchstring.push({"lastname":lastname});
 						}
 						
-						
+						console.log(JSON.stringify(searchstring));
 						
 						
 						db.find({
