@@ -252,7 +252,7 @@ app
 
 					if (firstname && middlename && lastname && address && city
 							&& state && zip && gender && dateofbirth) {
-						db = cloudant.use(dbCredentials.dbName);
+						db = cloudant.use(dbCredentials.dbName+'/patient/');
 
 						db.insert({
 							firstname : firstname,
