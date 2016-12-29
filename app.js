@@ -334,21 +334,21 @@ app
 						var searchstring='[';
 						var hasPreviousElem = false;
 						if(firstname){
-							searchstring+='{"firstname":firstname}';
+							searchstring+='{"firstname":'+firstname+'}';
 							hasPreviousElem = true;
 						}
 						if(middlename){
 							if(hasPreviousElem == true){
 								searchstring+=',';
 							}
-							searchstring+='{"middlename":middlename}';
+							searchstring+='{"middlename":'+middlename+'}';
 							hasPreviousElem = true;
 						}
 						if(lastname){
 							if(hasPreviousElem == true){
 								searchstring+=',';
 							}
-							searchstring+='{"lastname":lastname}';
+							searchstring+='{"lastname":'+lastname+'}';
 						}
 						searchstring+=']';
 						
