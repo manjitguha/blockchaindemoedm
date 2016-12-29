@@ -328,27 +328,44 @@ app
 					console.log('middlename -->' + middlename);
 					console.log('lastname -->' + lastname);
 					
-					if (firstname && middlename && lastname) {
+					if (firstname || middlename || lastname) {
 						db = cloudant.use(dbCredentials.patientDbName);
-
+						
+						var searchstring=[];
+						if(firstname){
+							searchstring.push({"firstname":firstname});
+						}
+						if(middlename){
+							searchstring.push({"middlename":middlename});
+						}
+						if(lastname){
+							searchstring.push({"lastname":lastname});
+						}
+						
+						
+						
+						
 						db.find({
 							"selector" : {
-								"$or":[{"firstname":firstname},{"middlename":firstname},{"lastname":firstname}]
+								"$or":[JSON.stringify(searchstring)]
 							},
 							"fields" : []
 						}, function(err, doc) {
 							if (!err) {
+								var userList = [];
+								
 								console.log('User --> ' + doc);
 								console.log('User Docs--> ' + doc.docs);
-								console.log('No of Users --> '
+								console.log('No of Patients --> '
 										+ doc.docs.length);
 								if (doc.docs.length > 0) {
+									for(var i=0;i<doc.docs.length;i++){
+										userList.push(doc.docs[i]);
+									}
+									
 									response.write(JSON.stringify({
 										status : 200,
-										body : {
-											token : 'fake-jwt-token',
-											loggedIdUser : doc.docs[0]
-										}
+										body : userList
 									}));
 									response.end();
 								} else {
