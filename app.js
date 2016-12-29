@@ -347,7 +347,7 @@ app
 						
 						db.find({
 							"selector" : {
-								"$or":[JSON.stringify(searchstring)]
+								"$or":JSON.stringify(searchstring)
 							},
 							"fields" : []
 						}, function(err, doc) {
