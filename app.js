@@ -13,7 +13,8 @@ var cloudant;
 var fileToUpload;
 
 var dbCredentials = {
-	dbName : 'my_sample_db'
+	dbName : 'my_sample_db',
+	patientDbName : 'patientdb'
 };
 
 var bodyParser = require('body-parser');
@@ -73,6 +74,14 @@ function initDBConnection() {
 	cloudant.db.create(dbCredentials.dbName, function(err, res) {
 		if (err) {
 			console.log('Could not create new db: ' + dbCredentials.dbName
+					+ ', it might already exist.');
+		}
+	});
+	
+	// check if patientDbName exists if not create
+	cloudant.db.create(dbCredentials.patientDbName, function(err, res) {
+		if (err) {
+			console.log('Could not create new db: ' + dbCredentials.patientDbName
 					+ ', it might already exist.');
 		}
 	});
@@ -252,7 +261,7 @@ app
 
 					if (firstname && middlename && lastname && address && city
 							&& state && zip && gender && dateofbirth) {
-						db = cloudant.use(dbCredentials.dbName+'/patient/');
+						db = cloudant.use(dbCredentials.patientDbName);
 
 						db.insert({
 							firstname : firstname,
