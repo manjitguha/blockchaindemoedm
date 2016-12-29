@@ -2,7 +2,12 @@
  * Module dependencies.
  */
 
-var express = require('express'), routes = require('./routes'), user = require('./routes/user'), http = require('http'), path = require('path'), fs = require('fs');
+var express = require('express');
+var routes = require('./routes');
+var user = require('./routes/user');
+var http = require('http');
+var path = require('path');
+var fs = require('fs');
 
 var app = express();
 
@@ -77,12 +82,14 @@ function initDBConnection() {
 					+ ', it might already exist.');
 		}
 	});
-	
+
 	// check if patientDbName exists if not create
 	cloudant.db.create(dbCredentials.patientDbName, function(err, res) {
 		if (err) {
-			console.log('Could not create new db: ' + dbCredentials.patientDbName
-					+ ', it might already exist.');
+			console
+					.log('Could not create new db: '
+							+ dbCredentials.patientDbName
+							+ ', it might already exist.');
 		}
 	});
 
@@ -295,6 +302,99 @@ app
 						response.end();
 					}
 				});
+
+
+
+app
+		.get(
+				'/api/patient',
+				function(request, response) {
+					console.log("/api/patient get method invoked.. ");
+
+					var firstname = request.param('firstname');
+					var middlename = request.param('middlename');
+					var lastname = request.param('lastname');
+				
+					console.log('firstname -->' + firstname);
+					console.log('middlename -->' + middlename);
+					console.log('lastname -->' + lastname);
+					
+					if (!firstname && !middlename && !lastname) {
+						firstname = request.body.firstname;
+						middlename = request.body.middlename;
+						lastname = request.body.lastname;
+					}
+					console.log('firstname -->' + firstname);
+					console.log('middlename -->' + middlename);
+					console.log('lastname -->' + lastname);
+					
+					if (firstname && middlename && lastname) {
+						db = cloudant.use(dbCredentials.patientDbName);
+
+						db.find({
+							"selector" : {
+								"$or":[{"firstname":firstname},{"middlename":firstname},{"lastname":firstname}]
+							},
+							"fields" : []
+						}, function(err, doc) {
+							if (!err) {
+								console.log('User --> ' + doc);
+								console.log('User Docs--> ' + doc.docs);
+								console.log('No of Users --> '
+										+ doc.docs.length);
+								if (doc.docs.length > 0) {
+									response.write(JSON.stringify({
+										status : 200,
+										body : {
+											token : 'fake-jwt-token',
+											loggedIdUser : doc.docs[0]
+										}
+									}));
+									response.end();
+								} else {
+									response.write(JSON.stringify({
+										status : 200
+									}));
+									response.end();
+								}
+							} else {
+								response.write(JSON.stringify({
+									status : 200
+								}));
+								response.end();
+							}
+						});
+						
+						
+						db.find({
+							firstname : firstname,
+							middlename : middlename,
+							lastname : lastname,
+						}, '', function(err, doc) {
+							if (err) {
+								console.log(err);
+								response.sendStatus(500);
+							} else {
+								response.write(JSON.stringify({
+									status : 200,
+									patient : JSON.stringify(doc)
+								}));
+								response.end();
+							}
+						});
+
+					} else {
+						console
+								.log("/api/patient method invocation failed.. username or password is blank");
+						response.write(JSON.stringify({
+							status : 200
+						}));
+						response.end();
+					}
+				});
+
+
+
 
 http.createServer(app).listen(app.get('port'), '0.0.0.0', function() {
 	console.log('Express server listening on port ' + app.get('port'));
