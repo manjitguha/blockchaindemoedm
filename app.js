@@ -391,24 +391,6 @@ app
 							}
 						});
 						
-						
-						db.find({
-							firstname : firstname,
-							middlename : middlename,
-							lastname : lastname,
-						}, '', function(err, doc) {
-							if (err) {
-								console.log(err);
-								response.sendStatus(500);
-							} else {
-								response.write(JSON.stringify({
-									status : 200,
-									patient : JSON.stringify(doc)
-								}));
-								response.end();
-							}
-						});
-
 					} else {
 						console
 								.log("/api/patient method invocation failed.. username or password is blank");
