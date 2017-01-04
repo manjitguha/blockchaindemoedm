@@ -351,7 +351,8 @@ app
 							searchstring+='{"lastname":'+lastname+'}';
 						}
 						searchstring+=']';
-						 
+						console.log('searchstring -->' + searchstring);
+							 
 						
 						db.find({
 							"selector" : {
